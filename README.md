@@ -216,7 +216,7 @@ export HADOOP_YARN_HOME=$HADOOP_PREFIX
 export PATH=$PATH:$HADOOP_PREFIX/sbin:$HADOOP_PREFIX/bin
 ```
 
-Seteamos los export:
+Fijamos los export:
 
 ```
 [hadoop@todos_nodos]$  source .bashrc
@@ -332,7 +332,7 @@ Edita en ```lola01``` /opt/hadoop/etc/hadoop/yarn-site.xml  para preparar el Res
 </property>
 ```
 
-Luego en ```lola01```:
+Luego únicamente en ```lola01``` :
 
 ```
 [hadoop@lola01]$   vi /opt/hadoop/etc/hadoop/slaves
@@ -353,11 +353,11 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 ```
 
+
 ## Despliegue de Hadoop y HDFS
 
-Formateamos HDFS:
 
-Entramos en el MASTER ```lola01``` y hacemos:
+Entramos en el MASTER ```lola01``` y hacemos lo siguiente para primero formatear hdfs y ejecutar el servicio HDFS:
 
 ```
 [root@lola01]$     su hadoop
