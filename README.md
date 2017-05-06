@@ -565,7 +565,7 @@ sparkR.session(master = "local[*]", sparkConfig = list(spark.driver.memory = "2g
 
 ```
 
-Ya tenemos disponible Spark+R para poder utilizarlo.
+Ya está disponible Spark+R para poder utilizarlo.
 
 
 
