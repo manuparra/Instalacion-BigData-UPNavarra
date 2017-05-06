@@ -1,5 +1,25 @@
 # Instalación y despliegue para BigData  UPNavarra
 
+![Arch](./imgs/logos.png)
+
+Tutorial creado por Manuel J. Parra Royón para el Departamento de Estadística e Investigación Operativa de la Universidad Pública de Navarra.
+
+- [Arquitectura del sistema de ejemplo](#arquitectura-del-sistema-de-ejemplo)
+- [Previo a la instalación](#previo-a-la-instalaci-n)
+- [Instalación de Hadoop y HDFS](#instalaci-n-de-hadoop-y-hdfs)
+  * [Configuración del fichero de /etc/hosts](#configuraci-n-del-fichero-de--etc-hosts)
+  * [Creación de usuario hadoop](#creaci-n-de-usuario-hadoop)
+  * [Configuración de SSH keyless](#configuraci-n-de-ssh-keyless)
+  * [Instalando JAVA](#instalando-java)
+  * [Instalando Hadoop](#instalando-hadoop)
+  * [Configuración de Hadoop](#configuraci-n-de-hadoop)
+  * [Despliegue de Hadoop y HDFS](#despliegue-de-hadoop-y-hdfs)
+  * [Validación de la instalación](#validaci-n-de-la-instalaci-n)
+- [Instalación de Spark](#instalaci-n-de-spark)
+- [Comenzar con Spark+R](#comenzar-con-spark-r)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 
 # Arquitectura del sistema de ejemplo
 
