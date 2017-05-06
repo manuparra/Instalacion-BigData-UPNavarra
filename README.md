@@ -9,6 +9,16 @@
 - Nodo Esclavo: 192.168.1.12 -> lola03
 - Nodo Esclavo: 192.168.1.13 -> lola04
 
+![Arch](./imgs/arch.png)
+
+Se instalará el siguiente software:
+
+- Hadoop 2.6.0
+- JAVA 1.8 (o superior a 1.6)
+- Scala 2.11.8 
+- Spark 2.0.1
+- R (superior a 3.XX)
+
 
 # Previo a la instalación
 
