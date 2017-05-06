@@ -4,7 +4,7 @@
 # Arquitectura del sistema de ejemplo
 
 - 4 Nodos 
-- Nodo Master:  192.168.1.10 -> lola01
+- Nodo Master/Cabecera:  192.168.1.10 -> lola01
 - Nodo Esclavo: 192.168.1.11 -> lola02
 - Nodo Esclavo: 192.168.1.12 -> lola03
 - Nodo Esclavo: 192.168.1.13 -> lola04
@@ -230,7 +230,7 @@ Ahora hacemos los siguientes cambios en todo los nodos:
 [hadoop@todos_nodos]$  vi /opt/hadoop/etc/hadoop/core-site.xml
 ```
 
-Añadir (ten en cuenta el nombre del servidor lola01):
+Añadir (ten en cuenta el nombre del servidor ```lola01```):
 
 ```
 <configuration>
@@ -277,7 +277,7 @@ y añadimos:
 ```
 
 
-Ahora sólo en el master lola01:
+Ahora sólo en el master ```lola01```:
  
 ```
 [hadoop@lola01]$   mkdir /home/hadoop/namenode
@@ -285,7 +285,7 @@ Ahora sólo en el master lola01:
 [hadoop@lola01]$   chgrp hadoop /home/hadoop/namenode/    
 ```
 
-Editamos /opt/hadoop/etc/hadoop/hdfs-site.xml en lola01. Añadimos lo siguiente, aunque ya debería estar:
+Editamos /opt/hadoop/etc/hadoop/hdfs-site.xml en ```lola01```. Añadimos lo siguiente, aunque ya debería estar:
 ```
 <property>
         <name>dfs.namenode.data.dir</name>
@@ -293,7 +293,7 @@ Editamos /opt/hadoop/etc/hadoop/hdfs-site.xml en lola01. Añadimos lo siguiente,
 </property>
 ```
 
-Edita en lola01 /opt/hadoop/etc/hadoop/mapred-site.xml. No exitirá el fichero, así que 
+Edita en ```lola01``` /opt/hadoop/etc/hadoop/mapred-site.xml. No exitirá el fichero, así que 
 debes copiar un fichero de template a este fichero:
 
 ```
@@ -313,7 +313,7 @@ debes copiar un fichero de template a este fichero:
 </configuration>
 ```
  
-Edita en lola01 /opt/hadoop/etc/hadoop/yarn-site.xml  para preparar el ResourceManager y NodeManagers:
+Edita en ```lola01``` /opt/hadoop/etc/hadoop/yarn-site.xml  para preparar el ResourceManager y NodeManagers:
 
 
 
@@ -332,7 +332,7 @@ Edita en lola01 /opt/hadoop/etc/hadoop/yarn-site.xml  para preparar el ResourceM
 </property>
 ```
 
-Luego en lola01:
+Luego en ```lola01```:
 
 ```
 [hadoop@lola01]$   vi /opt/hadoop/etc/hadoop/slaves
@@ -357,7 +357,7 @@ net.ipv6.conf.default.disable_ipv6 = 1
 
 Formateamos HDFS:
 
-Entramos en el MASTER lola01 y hacemos:
+Entramos en el MASTER ```lola01``` y hacemos:
 
 ```
 [root@lola01]$     su hadoop
@@ -406,76 +406,141 @@ añadimos contenido al fichero y luego lo movemos a la carpeta en HDFS del usuar
 [hadoop@lola01]$  hdfs dfs -copyFromLocal test.file /user/hadoop/
 ```
 
-Validamos que extá el fichero copiado al espacio HDFS:
+Validamos que está el fichero copiado al espacio HDFS:
 
 ```
 [hadoop@lola01]$  hdfs dfs -ls /user/hadoop/
 ```
 
 
-# Spark
-PAra todos los nodos como root:
+# Instalación de Spark
 
-Descargamos Spark 2.0.1
-curl -O http://apache.rediris.es/spark/spark-2.0.1/spark-2.0.1-bin-hadoop2.7.tgz
 
-Descomprimimos el fichero de Spark:
-tar xfvz spark-2.0.1-bin-hadoop2.7.tgz
+Para todos los nodos usando el usuario root
+
+- Descargamos Spark 2.0.1
+
+```
+[root@todos_nodos]$  curl -O http://apache.rediris.es/spark/spark-2.0.1/spark-2.0.1-bin-hadoop2.7.tgz
+```
+
+- Descomprimimos el fichero de Spark:
+
+```
+[root@todos_nodos]$  tar xfvz spark-2.0.1-bin-hadoop2.7.tgz
+```
 
 Copiamos Spark a su caperta:
-mv spark-2.0.1-bin-hadoop2.7 /usr/local/spark
+
+```
+[root@todos_nodos]$  mv spark-2.0.1-bin-hadoop2.7 /usr/local/spark
+```
 
 Descargamos Scala
-curl -O http://downloads.lightbend.com/scala/2.11.8/scala-2.11.8.tgz
+
+```
+[root@todos_nodos]$  curl -O http://downloads.lightbend.com/scala/2.11.8/scala-2.11.8.tgz
+```
+
 Descomprimimos Scala y lo movemos a su caperta
-tar xfvz scala-2.11.8.tgz 
-mv scala-2.11.8 /usr/local/scala
+```
+[root@todos_nodos]$  tar xfvz scala-2.11.8.tgz 
+[root@todos_nodos]$  mv scala-2.11.8 /usr/local/scala
+```
 
 Establecemos los PATH para scala y spark:
+
+```
 echo 'export PATH=$PATH:/usr/local/spark/bin/' >> $HOME/.bash_profile 
 echo 'export PATH=$PATH:/usr/local/scala/bin/' >> $HOME/.bash_profile 
 echo 'export SPARK_HOME=/usr/local/spark/' >> $HOME/.bash_profile
+```
 
+Ejecutamos para setear los exports:
+```
+[root@todos_nodos]$  source .bash_profile
+```
 
+```
+[root@todos_nodos]$  cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh 
+```
 
-Ejecutamos:
-source .bash_profile
+Añadimos al final del fichero $SPARK_HOME/conf/spark-env.sh estás variables :
+```
+[root@todos_nodos]$  vi $SPARK_HOME/conf/spark-env.sh
+```
+Hay que modificar en estos tres parámetros lo siguiente:
 
-#configuration of nodes
-cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh 
-
-#add these at the end of the file $SPARK_HOME/conf/spark-env.sh
-
+- El PATH al JAVA_HOME
+- La IP del nodo concreto;  es decir la ip local del nodo por ejemplo si estoy en lola02, pondría : 192.168.1.11
+- El número de cores máximos del nodo local
+```
 export JAVA_HOME=/opt/jdk1.8.0_131  
 export SPARK_PUBLIC_DNS="<IP LOCAL>"  
 export SPARK_WORKER_CORES=<CORES>
+```
 
+Ahora sólo para el nodo Cabecera ```lola01```
 
+```
+[root@lola01]$  vi $SPARK_HOME/conf/slaves
+```
+Añadimos los nodos esclavos de Spark:
 
-Solo en nodo Moaster:
-vi $SPARK_HOME/conf/slaves
-
+```
 lola02
 lola03
 lola04
 lola05
+```
 
-
-Como root, copiar las publics desde root en master:
-
+Por último, como root desde ```lola01```, copiar claves píblicas a los otros nodos:
+```
 ssh-copy-id -i ~/.ssh/id_rsa.pub root@lola01
 ssh-copy-id -i ~/.ssh/id_rsa.pub root@lola02
 ssh-copy-id -i ~/.ssh/id_rsa.pub root@lola03
 ssh-copy-id -i ~/.ssh/id_rsa.pub root@lola04
 ssh-copy-id -i ~/.ssh/id_rsa.pub root@lola05
+```
 
+Finalmente para arrancar el cluster de Spark, ejecutar desde el nodo de cabecera ```lola01```:
+```
+$SPARK_HOME/sbin/start-all.sh
+```
 
-
-Ejecutar: $SPARK_HOME/sbin/start-all.sh
-
-Testeo:
+Chequear que todo es correcto accediendo a:
 
 http://localhost:8080
+
+# Comenzar con Spark+R
+
+Necesitamos tener instalado R. En caso de no tener instalado R, usamos:
+
+```
+yum install epel-release
+yum install R
+```
+
+Ahora probamos que podemos aprovechar Spark+R. Entramos en R
+
+
+```
+R
+```
+
+y dentro del entorno de R usamos lo siguiente:
+
+```
+library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
+sparkR.session(master = "local[*]", sparkConfig = list(spark.driver.memory = "2g"))
+
+```
+
+Ya tenemos disponible Spark+R para poder utilizarlo.
+
+
+
+
 
 
 
