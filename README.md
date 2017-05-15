@@ -41,7 +41,7 @@ Se instalará el siguiente software:
 
 # Previo a la instalación
 
-- Tener instalado JAVA. JAVA debe estar instalado en todos los nodos en el mismo directorio. En caso contrario instalar siguiendo los pasos de [#instalando-java].
+- Tener instalado JAVA. La versión concreta de JAVA debe estar instalada en todos los nodos en el mismo directorio. En caso contrario instalar siguiendo los pasos de [Instalación Java](#instalando-java).
 - Deshabilitar SELinux.
 - Firewall IPTABLES habilitado con los puertos abiertos adicionales para Hadoop/Spark  en todos los nodos:
 ```
@@ -58,7 +58,7 @@ Se instalará el siguiente software:
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 8031 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 8033 -j ACCEPT
 ```
-- 
+
 
 # Instalación de Hadoop y HDFS
 
@@ -136,7 +136,7 @@ Realizar este proceso para cada uno de los nodos. De modo que todos pueda conect
 
 Haz este paso sólo si no tienes instalado JAVA o bien quieres actualizar la versión de JAVA:
 
-Descargar el JDK:  http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz?AuthParam=1494069154_427166ee96b26530d5f6ddb2a6dc76ca
+Descargar el JDK:  https://drive.google.com/file/d/0ByPBMv-S_GMENlNBQzRxNmtYeWc/view?usp=sharing
 
 En este caso usamos la ultima version disponible del JDK de la página de ORACLE:
 
@@ -146,14 +146,14 @@ Vamos al nodo Master ``lola01``, como root:
 ```
 cd /opt
 ```
-Descargamos ahí el paquete del JDK JAVA:
+Descargamos ahí el paquete del JDK JAVA
 ```
-curl -O http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz?AuthParam=1494069154_427166ee96b26530d5f6ddb2a6dc76ca
+Descargar el fichero: https://drive.google.com/file/d/0ByPBMv-S_GMENlNBQzRxNmtYeWc/view?usp=sharing y guardarlo en el nodo lola01 en la carpeta /opt
 ```
 Descomprimir el fichero:
 
 ```
-tar -zxf <file downloaded>
+tar -zxf java8.tar.gz
 ```
 
 En este caso se ha descargado la versión jdk1.8.0_131.
